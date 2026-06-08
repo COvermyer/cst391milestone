@@ -5,6 +5,6 @@ export interface Team {
     name: string;
     trainerName: string;
     description: string;
-    createdAt: Date;
+    createdAt: string;
     pokemon: Pokemon[];
 }

@@ -43,7 +43,7 @@ export const getTeamById: RequestHandler = async (req: Request, res: Response) =
         }
 
         console.log("[teams.controller][getTeamById] Retrieved team by ID successfully:", teamId);
-        res.status(200).json(team);
+        res.status(200).json(team[0]);
     } catch (error) {
         console.error("[teams.controller][getTeamById] Error fetching team by ID:", error);
         res.status(500).json({ error: 'Failed to retrieve team' });
@@ -63,9 +63,15 @@ export const createTeam: RequestHandler = async (req: Request, res: Response) =>
 
 export const updateTeam: RequestHandler = async (req: Request, res: Response) => {
     try {
-        const okPacket: OkPacket = await teamsDao.updateTeam(req.body);
-        console.log("[teams.controller][updateTeam] Team updated successfully with ID:", req.body.id);
-        res.status(200).json({ message: 'Team updated successfully', teamId: req.body.id });
+        let teamId = parseInt(req.params.id as string);
+        if (Number.isNaN(teamId)) {
+            res.status(400).json({ error: 'Invalid team ID' });
+            return;
+        }
+
+        const okPacket: OkPacket = await teamsDao.updateTeam(teamId, req.body);
+        console.log("[teams.controller][updateTeam] Team updated successfully with ID:", teamId);
+        res.status(200).json({ message: 'Team updated successfully', teamId: teamId });
     } catch (error) {
         console.error("[teams.controller][updateTeam] Error updating team:", error);
         res.status(500).json({ error: 'Failed to update team' });

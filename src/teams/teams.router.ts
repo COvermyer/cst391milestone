@@ -12,7 +12,7 @@ router
     .post(teamsController.createTeam)
 
 router
-    .route('/teams')
+    .route('/teams/:id')
     .put(teamsController.updateTeam);
       
 router

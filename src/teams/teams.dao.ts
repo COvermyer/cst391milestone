@@ -16,8 +16,8 @@ export const createTeam = async (team: Team) => {
     return execute<OkPacket>(teamQueries.createTeam, [team.name, team.trainerName, team.description]);
 };
 
-export const updateTeam = async (team: Team) => {
-    return execute<OkPacket>(teamQueries.updateTeam, [team.name, team.trainerName, team.description, team.id]);
+export const updateTeam = async (id: number, team: Team) => {
+    return execute<OkPacket>(teamQueries.updateTeam, [team.name, team.trainerName, team.description, id]);
 };
 
 export const deleteTeam = async (id: number) => {
